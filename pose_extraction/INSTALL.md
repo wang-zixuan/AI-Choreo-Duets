@@ -1,17 +1,24 @@
 # AlphaPose Installation on Perlmutter
 
+## Perlmutter Introduction
+[Perlmutter](https://docs.nersc.gov/getting-started/) is the computing resources for National Energy Research Scientific Computing Center (NERSC). It is a HPE Cray EX supercomputer with over 1500 GPU-accelerated compute nodes. 
+
+To install AlphaPose on Perlmutter, please make sure that you have available GPU resources. It's very hard to use AlphaPose with CPU because it uses CUDA operators. 
+
+Then, please follow the instructions below. The package version might be tricky.
+
 ## NVCC
 
-`nvcc` is already installed in the login node of Perlmutter. 
+`nvcc` is already installed in the login node of Perlmutter. The CUDA driver version on Perlmutter is 12.2, which requires us to install PyTorch >= 2.x.
 
 ```bash
 nvcc --version
-# we can get 12.2
+# 12.2
 ```
 
-## Package installation
+## Package Installation
 
-- install conda
+- Anaconda: conda is easy for us to manage the python environment.
 
   ```bash
   wget https://repo.anaconda.com/archive/Anaconda3-2023.03-Linux-x86_64.sh
@@ -22,23 +29,23 @@ nvcc --version
   conda --version
   ```
 
-- torch and torchvision
+- Installation of torch & torchvision
 
   ```bash
   # important! we need python version >= 3.10 to make everything work
   conda create -n alphapose python=3.10
   conda activate alphapose
   
-  # install pytorch
+  # install pytorch with wheel
   wget https://download.pytorch.org/whl/cu121/torch-2.3.0%2Bcu121-cp310-cp310-linux_x86_64.whl
   pip install torch-2.3.0%2Bcu121-cp310-cp310-linux_x86_64.whl
   
-  # install torchvision
+  # install torchvision with wheel
   wget https://download.pytorch.org/whl/cu121/torchvision-0.18.0%2Bcu121-cp310-cp310-linux_x86_64.whl
   pip install torchvision-0.18.0%2Bcu121-cp310-cp310-linux_x86_64.whl
   ```
 
-- get alphapose
+- Get Alphapose from GitHub
 
   ```bash
   git clone https://github.com/MVIG-SJTU/AlphaPose.git
@@ -53,7 +60,7 @@ nvcc --version
   conda install -c fvcore -c iopath -c conda-forge fvcore iopath
   conda install -c bottler nvidiacub
   
-  # pytorch3d
+  # pytorch3d compatible with torch
   pip install --extra-index-url https://miropsota.github.io/torch_packages_builder pytorch3d==0.7.6+pt2.3.0cu121
   
   wget https://download.pytorch.org/whl/nightly/pytorch_triton-3.0.0%2B989adb9a29-cp310-cp310-linux_x86_64.whl
@@ -62,9 +69,9 @@ nvcc --version
 
 - Halpecocotool issue
 
-  - follow this https://github.com/MVIG-SJTU/AlphaPose/issues/1195 to solve halpecocotools issue before installing AlphaPose!
+  - When installing AlphaPose, you might encounter Halpecocotool issue. Follow this https://github.com/MVIG-SJTU/AlphaPose/issues/1195 to solve it before installing AlphaPose!
 
-- install
+- Final Installation
 
   ```bash
   # installation of alphapose requires gcc > 9
@@ -77,8 +84,9 @@ nvcc --version
   python setup.py build develop
   ```
 
-- Inference (image)
+## Inference
 
   ```bash
-  python scripts/demo_3d_inference.py --cfg configs/smpl/256x192_adam_lr1e-3-res34_smpl_24_3d_base_2x_mix.yaml --checkpoint pretrained_models/pretrained_w_cam.pth --indir examples/demo/ --outdir examples/res_3d --save_img
+  # video inference
+  python scripts/demo_3d_inference.py --cfg configs/smpl/256x192_adam_lr1e-3-res34_smpl_24_3d_base_2x_mix.yaml --checkpoint pretrained_models/pretrained_w_cam.pth --video scripts/Dyads\ Rehearsal\ Leah.mov --outdir examples/res_3d
   ```
