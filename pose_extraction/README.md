@@ -26,8 +26,9 @@ AlphaPose will also extract 3D body joints for every person in every frame. The 
 - Get the inference result of 3D joints, move the first joint to `(0, 0, 0)`
 
 Therefore, in order to keep the interaction between the dancers, we remove [this line](https://github.com/MVIG-SJTU/AlphaPose/blob/master/alphapose/models/simple3dposeSMPLWithCam.py#L325) in the model. Below shows the original unprocessed data.
-
-![](imgs/2.gif) 
+<div align="center">
+    <img src="imgs/2.gif" width=50% />
+</div> 
 
 Please check out `preprocess_data.ipynb` for detailed processing of raw data (many thanks to Luis!), which addresses:
 - missing frames
@@ -37,7 +38,9 @@ Please check out `preprocess_data.ipynb` for detailed processing of raw data (ma
 
 Processed data:
 
-![](3.gif)
+<div align="center">
+    <img src="imgs/3.gif" width=50% />
+</div> 
 
 ## Raw data link
 This [link](https://drive.google.com/drive/folders/1QkkAjVaKEuPBDzz7mN1BVYxUYZaYdtJF?usp=sharing) provides the raw json data extracted from AlphaPose.
