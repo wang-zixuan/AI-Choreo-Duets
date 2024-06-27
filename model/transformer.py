@@ -66,6 +66,4 @@ class DanceTransformer(nn.Module):
         output1 = output1.permute(1, 0, 2)
         output2 = output2.permute(1, 0, 2)
 
-        print(output1.shape)
-
         return output1, output2
