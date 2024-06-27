@@ -9,6 +9,8 @@ class Pipeline:
         self.network = DanceTransformer()
         self.loss = 0
 
+        self.init_training_settings()
+
     def init_training_settings(self):
         self.network.train()
         self.cri_regression_loss = torch.nn.MSELoss()
